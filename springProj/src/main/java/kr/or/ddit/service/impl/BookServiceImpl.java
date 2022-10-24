@@ -1,5 +1,7 @@
 package kr.or.ddit.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,31 @@ public class BookServiceImpl implements BookService {
 	public int insert(BookVO bookVO) {
 		//insert 처리 결과(0 또는 1이상)
 		return this.bookDao.insert(bookVO);
+	}
+	
+	//책 상세보기
+	@Override
+	public BookVO selectDetail(BookVO bookVO) {
+		//bookVO : BookVO{"bookId"="1","title":"","category":"","price":0,"insertDate":""}
+		return this.bookDao.selectDetail(bookVO);
+	}
+	
+	//책 목록보기
+	@Override
+	public List<BookVO> list(String keyword){
+		return this.bookDao.list(keyword);
+	}
+	
+	//책 수정하기
+	@Override
+	public int update(BookVO bookVO) {
+		return this.bookDao.update(bookVO);
+	}
+	
+	//책 삭제하기
+	@Override
+	public int delete(int bookId) {
+		return this.bookDao.delete(bookId);
 	}
 }
 

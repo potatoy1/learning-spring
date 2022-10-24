@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+	<!-- PRODUCT 테이블에 insert -->
+	<insert id="insert" parameterType="kr.or.ddit.vo.ProductVO">
+		INSERT INTO PRODUCT(
+			  PRODUCT_ID
+			, PNAME
+			, UNIT_PRICE
+			, DESCRIPTION
+			, MANUFACTURER
+			, CATEGORY
+			, UNITS_IN_STOCK
+			, CONDITION) 
+		VALUES(#{productId}
+			, #{pname}
+			, #{unitPrice}
+			, #{description}
+			, #{manufacturer}
+			, #{category}
+			, #{unitInStock}
+			, #{condition}
+			)
+	</insert>
+	
+	<!-- 상품 목록 -->
+	<select id="list" resultType="productVO" parameterType="String">
+		SELECT PRODUCT_ID, PNAME, UNIT_PRICE, DESCRIPTION, MANUFACTURER
+			 , CATEGORY, UNITS_IN_STOCK, CONDITION
+		FROM   PRODUCT
+		WHERE  1 = 1
+		<if test="keyword!=null and keyword!=''">
+			AND   (pname LIKE '%' || #{keyword} || '%'
+			OR    CATEGORY LIKE '%' || #{keyword} || '%')
+		</if>
+	</select>
+
+	<!-- 상품 상세보기-->
+	<select id="select_detail" parameterType="productVO" resultType="productVO">
+		SELECT PRODUCT_ID, PNAME, UNIT_PRICE, DESCRIPTION, MANUFACTURER
+			 , CATEGORY, UNITS_IN_STOCK, CONDITION
+		FROM  PRODUCT
+		WHERE PRODUCT_ID = #{productId}
+	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="update" parameterType="productVO">
+		UPDATE PRODUCT
+		SET PNAME=#{pname},UNIT_PRICE=#{unitPrice},DESCRIPTION=#{description},MANUFACTURER=#{manufacturer},CATEGORY=#{category},
+			UNITS_IN_STOCK=#{unitInStock},CONDITION=#{condition},
+		WHERE PRODUCT_ID = #{productId}
+	</update>
+	
+	<!-- 상품 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM PRODUCT
+		WHERE PRODUCT_ID = #{productId}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
