@@ -45,7 +45,6 @@ public class ProductDao {
 	public int delete(String productId) {
 		return this.sqlSessionTemplate.delete("product.delete", productId);
 	}
-	
 }
 
 
