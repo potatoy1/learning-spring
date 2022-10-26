@@ -45,19 +45,19 @@
 				<p><b>재고 수 : </b>${data.unitInStock}</p>
 				<h4>${data.unitPrice}</h4>
 				<p>
-<%-- 				<form name="addForm" action="addCart.jsp?id=${data.productId}" --%>
-<!-- 				method="post"> -->
-				<form name="addForm" method="post">
+				<!-- /addCart?productId=P1234 -->
+ 				<form name="addForm" action="/addCart" method="post">
+					<input type="text" name="productId" value="${data.productId}" /> 
 					<a href="/update?productId=${data.productId}" class="btn btn-info">상품 수정&raquo;</a>
 					<%-- <a href="/delete?productId=${data.productId}" class="btn btn-warning">상품 삭제&raquo;</a> --%>
 <!-- 					<a href="#" class="btn btn-info">상품 주문&raquo;</a> -->
-<!-- 					<a href="cart.jsp" class="btn btn-warning">장바구니&raquo;</a> -->
+					<a href="cart" class="btn btn-warning">장바구니&raquo;</a>
 					<a href="/products" class="btn btn-secondary">상품 목록&raquo;</a>
-					<a href="/cart" class="btn btn-secondary">장바구니&raquo;</a>
+					<a href="#" class="btn btn-info" onclick="addToCart()">상품주문&raquo;</a>
 				</form>
 				</p>
 				<p>
-				<form action="/delete" method="post">
+				<form name="delForm" action="/delete" method="post">
 				<!-- 상품 삭제 하기 -->
 				<input type="hidden" name="productId" value="${data.productId}">
 				<input type="submit" class="btn btn-danger" value="삭제하기&raquo;" code="delete"/>
