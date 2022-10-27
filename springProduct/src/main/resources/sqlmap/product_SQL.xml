@@ -10,7 +10,7 @@
 			, DESCRIPTION
 			, MANUFACTURER
 			, CATEGORY
-			, UNITS_IN_STOCK
+			, UNIT_IN_STOCK
 			, CONDITION) 
 		VALUES(#{productId}
 			, #{pname}
@@ -26,7 +26,7 @@
 	<!-- 상품 목록 -->
  	<select id="list" parameterType="String" resultType="productVO">
  		SELECT PRODUCT_ID, PNAME, UNIT_PRICE, DESCRIPTION, MANUFACTURER
-			, CATEGORY, UNITS_IN_STOCK, CONDITION, FILENAME
+			, CATEGORY, UNIT_IN_STOCK, CONDITION, FILENAME
 		FROM PRODUCT
 		WHERE 1= 1
 	<if test="keyWord!=null and keyWord!=''">
@@ -48,7 +48,7 @@
 		    description,
 		    manufacturer,
 		    category,
-		    units_in_stock unit_in_stock,
+		    UNIT_IN_STOCK unit_in_stock,
 		    condition,
 		    filename
 		FROM
@@ -65,7 +65,7 @@
 		    , DESCRIPTION = #{description}
 		    , MANUFACTURER = #{manufacturer}
 		    , CATEGORY = #{category}
-		    , UNITS_IN_STOCK = #{unitInStock}
+		    , UNIT_IN_STOCK = #{unitInStock}
 		    , CONDITION = #{condition}
 		WHERE PRODUCT_ID = #{productId}
 	</update>
@@ -76,6 +76,16 @@
 	DELETE FROM PRODUCT 
 	WHERE PRODUCT_ID = #{productId}
 	</delete>
+	
+	<!-- CART 테이블에 insert 
+	들어오는 것 : CartVO
+	나가는 것 : 생략(insert/update/delete는 resultType="int"를 생략
+	-->
+	<insert id="insertCart">
+		INSERT INTO CART(CART_ID, NAME, SHIPPING_DATE, COUNTRY,
+		 				ZIP_CODE, ADDRESS_NAME, ADDRESS_DETAIL, REGIST_DT)
+		VALUES(#{cartId},#{name},#{shippingDate},#{country},#{zipCode},#{addressName},#{addressDetail},sysdate)
+	</insert>
 </mapper>
 
 

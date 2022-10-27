@@ -1,8 +1,8 @@
+<%@page import="kr.or.ddit.vo.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.math.BigDecimal"%>
-<%@page import="kr.or.ddit.dto.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.net.URLDecoder"%>
 <%
@@ -15,6 +15,7 @@
 	String Shipping_cartId = "";
 
 	Cookie[] cookies = request.getCookies();
+	
 	//쿠키의 개수만큼 반복
 	for(int i=0;i<cookies.length;i++){
 		Cookie thisCookie = cookies[i];
@@ -45,7 +46,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css" />
 <title>주문 정보</title>
 </head>
 <body>
@@ -67,9 +68,11 @@
 		<!-- 고객 정보 시작 : cookie사용-->
 		<div class="row justify-content-between">
 			<strong>배송 주소</strong><br />
-			성명 : <%=Shipping_name%><br />
-			우편번호 : <%=Shipping_zipCode%><br />
-			주소 : <%=Shipping_addressName%>&nbsp;<%=Shipping_country%>
+			성명 :${cartVO.name}<br />
+			우편번호 :${cartVO.zipCode}<br />
+			주소 : ${cartVO.addressName}&nbsp;
+				   ${cartVO.addressDetail}&nbsp;
+				   ${cartVO.country}
 		</div>
 		<div class="col-4" align="right">
 			<p>
@@ -127,11 +130,11 @@
 				</tr>
 			</table>
 			
-			<a href="shippingInfo.jsp?cartId=<%=Shipping_cartId%>"
+			<a href="/shippingInfo?cartId=<%=Shipping_cartId%>"
 			class="btn btn-secondary" role="button">이전</a>
-			<a href="thankCustomer.jsp" class="btn btn-success"
+			<a href="/thankCustomer" class="btn btn-success"
 			role="button">주문 완료</a>
-			<a href="checkOutCancelled.jsp" class="btn btn-secondary"
+			<a href="/checkOutCancelled" class="btn btn-secondary"
 			role="button">취소</a>
 		</div>
 		<!-- 상품 정보 끝 -->
