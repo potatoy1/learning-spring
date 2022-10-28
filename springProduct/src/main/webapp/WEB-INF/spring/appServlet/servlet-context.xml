@@ -48,6 +48,11 @@
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">		
 	</beans:bean>
 	
+	<!-- 업로드된 파일 저장 위치 설정 -->
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\\upload"></beans:constructor-arg>
+	</beans:bean>
+	
 </beans:beans>
 
 

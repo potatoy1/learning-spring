@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.or.ddit.vo.CartVO;
+import kr.or.ddit.vo.AttachVO;
 import kr.or.ddit.vo.ProductVO;
 
 @Repository
@@ -47,9 +47,9 @@ public class ProductDao {
 		return this.sqlSessionTemplate.delete("product.delete", productId);
 	}
 	
-	//CART 테이블에 insert
-	public int insertCart(CartVO cartVO) {
-		return this.sqlSessionTemplate.insert("product.insertCart",cartVO);
+	//ATTACH 테이블에 다중 insert
+	public int insertAttach(List<AttachVO> attachVOList) {
+		return this.sqlSessionTemplate.insert("product.insertAttach",attachVOList);
 	}
 }
 

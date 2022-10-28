@@ -74,7 +74,7 @@ public class ProductController {
 		log.info("result : " + result);
 		
 		if(result > 0) {//입력 성공
-			mav.setViewName("redirect:/deltail?productId=" + productVO.getProductId());
+			mav.setViewName("redirect:/detail?productId=" + productVO.getProductId());
 		}else {//입력 실패
 			mav.setViewName("redirect:/addproduct");
 		}
@@ -290,11 +290,14 @@ public class ProductController {
 	
 	//요청URI => /processShippingInfo
 	//요청파라미터 => 배송정보들
-	@RequestMapping(value="/processShippingInfo",method = RequestMethod.POST)
-	public String processShippingInfo(@ModelAttribute CartVO cartVO, HttpServletResponse response,Model model) throws Exception {
+	@RequestMapping(value="/processShippingInfo",method=RequestMethod.POST)
+	public String processShippingInfo(@ModelAttribute CartVO cartVO,
+			HttpServletResponse response, Model model) throws Exception {
+		//쿠키 쿠키 뉴~ 큐키 네임 밸류
+		//요청 파라미터 정보를 쿠키에 넣음 
 		Cookie cartId = 
-				new Cookie("Shipping_cartId",
-				URLEncoder.encode(cartVO.getCartId(),"UTF-8"));
+			new Cookie("Shipping_cartId",
+			URLEncoder.encode(cartVO.getCartId(),"UTF-8"));
 		Cookie name = 
 				new Cookie("Shipping_name",
 				URLEncoder.encode(cartVO.getName(),"UTF-8"));
@@ -332,16 +335,18 @@ public class ProductController {
 		response.addCookie(addressName);
 		response.addCookie(addressDetail);
 		
-		model.addAttribute("cartVO",cartVO);
-
-		return "/product/orderConfirmation";
+		model.addAttribute("cartVO", cartVO);
+		
+		//forwarding
+		return "product/orderConfirmation";
 	}
 	
-	//배송 후 마무리. 세션종료. 쿠키종료.
+	//배송 후 마무리. 세션 종료. 쿠키 종료. 
 	//요청URI : /thankCustomer
-	@RequestMapping(value="/thankCustomer",method = RequestMethod.GET)
-	public String thankCustomer(HttpServletRequest request, CartVO cartVO) throws Exception {
-		// 1. 쿠키정보를 가져와 CART 테이블로 insert
+	@RequestMapping(value="/thankCustomer", method=RequestMethod.GET)
+	public String thankCustomer(HttpServletRequest request,
+			CartVO cartVO) throws Exception {
+		//1. 쿠키 정보를 가져와 CART 테이블로 insert
 		String Shipping_name = "";
 		String Shipping_zipCode = "";
 		String Shipping_country = "";
@@ -388,14 +393,18 @@ public class ProductController {
 				cartVO.setCartId(Shipping_cartId);
 			}
 		}
-		log.info("cartVO: " + cartVO.toString());
+		//cartVO : CartVO [cartId=1264E7065027CAF1C93F7D9D57DCE127, name=개똥이
+		//, shippingDate=2022-10-27, country=대한민국, zipCode=63309
+		//, addressName=제주특별자치도 제주시 영평동 2181, addressDetail=123, registDt=null]
+		log.info("cartVO : " + cartVO.toString());
 		
-		// 2. 세션정보를 가져와 CART_DET 테이블로 다중 insert
+		//2. 세션 정보를 가져와 CART_DET 테이블로 다중 insert
 		HttpSession session = request.getSession();
-		ArrayList<ProductVO>list = (ArrayList<ProductVO>)session.getAttribute("cartlist");
-	
-		//3. CartVO : CartDetVO 1 : N
-		List<CartDetVO> cartDetVOList = new ArrayList<CartDetVO>(); 
+		ArrayList<ProductVO> list 
+			= (ArrayList<ProductVO>)session.getAttribute("cartlist");
+		
+		//3. CartVO : CartDetVO = 1 : N
+		List<CartDetVO> cartDetVOList = new ArrayList<CartDetVO>();
 		for(ProductVO vo : list) {
 			CartDetVO cartDetVO = new CartDetVO();
 			cartDetVO.setCartId(cartVO.getCartId());
@@ -403,26 +412,25 @@ public class ProductController {
 			cartDetVO.setUnitPrice(vo.getUnitPrice());
 			cartDetVO.setQuantity(vo.getQuantity());
 			cartDetVO.setAmount(vo.getUnitPrice() * vo.getQuantity());
-
+			
 			cartDetVOList.add(cartDetVO);
 		}
 		cartVO.setCartDetVOList(cartDetVOList);
+		
 		log.info("cartVO : " + cartVO.toString());
 		
-		this.productService.thankCustomer(cartVO);
 		//forwarding
 		return "product/thankCustomer";
 	}
 	
 	//주문 취소
 	//요청URI : /checkOutCancelled
-	//목적 :  세션종료
-	@RequestMapping(value="/checkOutCancelled",method = RequestMethod.GET)
+	//목적 : 세션 종료
+	@RequestMapping(value="/checkOutCancelled", method=RequestMethod.GET)
 	public String checkOutCancelled() {
 		//forwarding
 		return "product/checkOutCancelled";
 	}
-	
 }
 
 
