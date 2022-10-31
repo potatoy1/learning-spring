@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.dao.BookDao;
 import kr.or.ddit.service.BookService;
+import kr.or.ddit.vo.AttachVO;
 import kr.or.ddit.vo.BookVO;
 
 //"프링아 이 클래스는 서비스 클래스야"라고 스프링에게 알려줌. 
@@ -29,7 +30,7 @@ public class BookServiceImpl implements BookService {
 	//책 상세보기
 	@Override
 	public BookVO selectDetail(BookVO bookVO) {
-		//bookVO : BookVO{"bookId"="1","title":"","category":"","price":0,"insertDate":""}
+		//BookVO{"bookId":"1","title":"","category":"","price":0,"insertDate":""}
 		return this.bookDao.selectDetail(bookVO);
 	}
 	
@@ -50,7 +51,23 @@ public class BookServiceImpl implements BookService {
 	public int delete(int bookId) {
 		return this.bookDao.delete(bookId);
 	}
+	
+	//ATTACH 테이블에 다중 insert
+	@Override
+	public int insertAttach(List<AttachVO> attachVOList) {
+		return this.bookDao.insertAttach(attachVOList);
+	}
 }
+
+		
+		
+		
+		
+		
+		
+		
+		
+
 
 
 

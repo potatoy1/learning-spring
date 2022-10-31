@@ -12,21 +12,22 @@
 		margin-top:50px;
 	}
 	.imgs_wrap img{
-		max_width:100%;
+		max-width:100%;
 	}
 </style>
 <script type="text/javascript" src="/resources/js/validation.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	//이미지 미리보기 시작//////////////////////
+	//이미지 미리보기 시작////////////////////////
 	let sel_file = [];
-	//input type="file" id ="productImage" name="productImage" class="form-control"
+	
+	//input type="file" id="productImage" name="productImage" class="form-control"
 	//multiple
-	$("#productImage").on("change",handleImageFileSelect);
+	$("#productImage").on("change",handleImgFileSelect);
 	//파라미터 e : onchange 이벤트 객체
-	function handleImageFileSelect(e){
-		//이벤트가 발생된 타겟 안에 이미지 파일들을 가져와보자
+	function handleImgFileSelect(e){
+		//이벤트가 발생된 타겟 안에 이미지 파일들을 가져와보자 
 		let files = e.target.files;
 		//이미지가 여러개가 있을 수 있으므로 이미지를 분리하여 배열로 만듦
 		let fileArr = Array.prototype.slice.call(files);
@@ -53,10 +54,23 @@ $(function(){
 			}
 			//f : 이미지 파일 객체를 읽은 후 다음 이미지 파일(f)을 위해 초기화
 			reader.readAsDataURL(f);
-		
-		});
+		});//end forEach
 	}
-	//이미지 미리보기 끝//////////////////////
+	//이미지 미리보기 끝////////////////////////
+	
+	//PRODUCT 테이블의 PRODUCT_ID 자동생성
+	//아작났어유..피씨다타써
+	$.ajax({
+		url:"/getProductId",
+		type:"post",
+		dataType:"json",
+		success:function(result){
+			console.log("result: " + JSON.stringify(result));
+			console.log("result.productId: " + result.productId);
+			$("#productId").val(result.productId);
+		}
+		
+	});
 });
 </script>
 </head>
@@ -73,11 +87,12 @@ $(function(){
 		<div class="text-right">
 			<a href="?language=ko">Korea</a> | <a href="?language=en">English</a>
 		</div> 
-		<form name="newProduct" action="/addProduct" class="form-horizontal" method="post" enctype="multipart/form-data">
+		<form name="newProduct" action="/addProduct" class="form-horizontal" method="post"
+			enctype="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-sm-2"><spring:message code="productId"/></label>
 				<div class="col-sm-3">
-					<input type="text" id="productId" name="productId" class="form-control">
+					<input type="text" id="productId" name="productId" class="form-control" readonly="readonly" >
 				</div>
 			</div>
 			<div class="form-group row">
@@ -128,7 +143,8 @@ $(function(){
 			<div class="form-group row">
 				<label class="col-sm-2"><spring:message code="productImage"/></label>
 				<div class="col-sm-5">
-					<input type="file" id="productImage" name="productImage" class="form-control" multiple />
+					<input type="file" id="productImage" name="productImage" class="form-control"
+						multiple />
 				</div>
 			</div>
 			<div class="form-group row">

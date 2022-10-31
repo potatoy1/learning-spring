@@ -28,7 +28,7 @@
 	-->
 	<!-- bookVO(들어오는것) = > {"bookId":"1","title":"","category":"","price":0,"insertDate":""} -->
 	<!-- bookVO(나가는것) = > {"bookId":"1","title":"개똥이 월드","category":"소설","price":10000,"insertDate":"22/10/22"} -->
-	<select id="select_detail" parameterType="bookVO" resultType="bookVO">
+	<select id="select_detail" parameterType="bookVO"  resultType="bookVO">
 		SELECT BOOK_ID, TITLE, CATEGORY, PRICE, INSERT_DATE
 		FROM  BOOK
 		WHERE BOOK_ID = #{bookId}

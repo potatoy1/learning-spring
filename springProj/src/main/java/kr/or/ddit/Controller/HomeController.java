@@ -21,19 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import kr.or.ddit.vo.BookVO;
 import lombok.extern.slf4j.Slf4j;
+
 
 //프링아 자바빈으로 관리해줘
 @Slf4j
 @Controller
 public class HomeController {
-	@RequestMapping("/")
+	//http://localhost/
+	@RequestMapping("/")	
 	public String home() {
 		return "index";
 	}
-	/* 1.void 타입
+	
+	/* 1. void 타입
 	 호출하는 URL과 동일한 뷰 이름을 나타냄
 	 */
 	@RequestMapping(value="/goHome0101",method=RequestMethod.GET)
@@ -41,18 +43,15 @@ public class HomeController {
 		log.info("home0101에 왔다");
 		//return "goHome0101";
 	}
-	@RequestMapping(value="/tree",method=RequestMethod.GET)
-	public void tree() {
-		log.info("tree에 왔다");
-		//return "goHome0101";
-	}
+	
 	@RequestMapping(value="/goHome0102",method=RequestMethod.GET)
 	public void home0102() {
 		log.info("home0102에 왔다");
 		//return "goHome0102";
 	}
+	
 	/* 2. String 타입
-	 뷰 파일의 경로와 파일 이름을 나타내기 위해 사용
+	 	뷰 파일의 경로와 파일 이름을 나타내기 위해 사용
 	 */
 	@RequestMapping(value="/goHome0201",method=RequestMethod.GET)
 	public String home0201() {
@@ -60,6 +59,7 @@ public class HomeController {
 		//forwarding
 		return "goHome0201";
 	}
+	
 	@RequestMapping(value="/sub/goHome0202",method=RequestMethod.GET)
 	public String home0202() {
 		log.info("home0202에 왔다");
@@ -67,16 +67,16 @@ public class HomeController {
 		return "goHome0202";
 	}
 	
-	/* 3.자바빈즈 클래스 타입
-	 JSON 객체 타입의 데이터를 만들어서 반환하는 용도로 사용
-	 pom.xml에 jackson-databind 의존 라이브러리가 추가되어 있어야 함
-	 
-	 골뱅이ResponseBody를 지정하지 않으면 HTTP 404 오류 발생
-	 jackson-databind가 추가 안되있다면 406 오류 발생
+	/* 3. 자바빈즈 클래스 타입
+	   JSON 객체 타입의 데이터를 만들어서 반환하는 용도로 사용
+	   pom.xml에 jackson-databind 의존 라이브러리가 추가되어 있어야 함
+	   
+	   골뱅이ResponseBody를 지정하지 않으면 HTTP 404 오류 발생
+	  jackson-databind가 추가 안되있다면 406 오류 발생
 	 */
-	//******* with ajax => 아작났어유.. pc 다탔어..
+	//******* with ajax => 아작았어유..PC 다탔어..
 	@ResponseBody
-	@RequestMapping(value="/goHome0301",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome0301",method=RequestMethod.GET)
 	public BookVO home0301() {
 		log.info("home0301");
 		
@@ -93,6 +93,7 @@ public class HomeController {
 	/* 4. 컬렉션 List 타입
 	 	JSON 객체 배열 타입의 데이터를 만들어서 반환하는 용도로 사용
 	 */
+	//****** ajax
 	@ResponseBody
 	@RequestMapping(value="/goHome0401",method=RequestMethod.GET)
 	public List<BookVO> home0401(){
@@ -115,21 +116,21 @@ public class HomeController {
 		bookVO.setCategory("드라마");
 		bookVO.setPrice(12000);
 		bookVO.setInsertDate(new Date());
-	
+		
 		list.add(bookVO);//1
 		
 		return list;
-
 	}
-	/* 5.Map 타입
-	  Map 형태의 자료를 JSON 객체 타입의 데이터로 만들어서 반환
+	
+	/* 5. Map 타입
+	   Map 형태의 자료를 JSON 객체 타입의 데이터로 만들어서 반환	 
 	 */
 	@ResponseBody
-	@RequestMapping(value="/goHome0501",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome0501",method=RequestMethod.GET)
 	public Map<String,BookVO> home0501(){
 		log.info("home0501에 왔다");
 		
-		Map<String, BookVO> map = new HashMap<String, BookVO>();
+		Map<String,BookVO> map = new HashMap<String,BookVO>();
 		
 		BookVO bookVO = new BookVO();
 		bookVO.setBookId(7);
@@ -146,20 +147,18 @@ public class HomeController {
 		bookVO.setCategory("드라마");
 		bookVO.setPrice(12000);
 		bookVO.setInsertDate(new Date());
-	
+		
 		map.put("key2", bookVO);
-
 		
 		return map;
-
 	}
 	
 	/* 6.ResponseEntity<Void> 타입
-	 * reponse 할 때 Http 헤더 정보와 내용을 가공 시 사용
+	 	response 할 때 Http 헤더 정보와 내용을 가공 시 사용
 	 */
-	//200 OK 상태코드 응답 
+	//200 OK 상태코드 응답
 	@ResponseBody
-	@RequestMapping(value="/goHome0601",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome0601",method=RequestMethod.GET)
 	public ResponseEntity<Void> home0601(){
 		log.info("home0601에 왔다");
 		
@@ -167,11 +166,11 @@ public class HomeController {
 	}
 	
 	/* 7.ResponseEntity<String> 타입
-	 * reponse 할 때 Http 헤더 정보와 문자열 데이터를 전달
+	 	response 할 때 Http 헤더 정보와 문자열 데이터를 전달
 	 */
-	//"SUCCESS"메시지와 200 OK 상태코드 응답 
+	//"SUCCESS"메시지와 200 OK 상태코드 응답
 	@ResponseBody
-	@RequestMapping(value="/goHome0701",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome0701",method=RequestMethod.GET)
 	public ResponseEntity<String> home0701(){
 		log.info("home0701에 왔다");
 		
@@ -179,11 +178,11 @@ public class HomeController {
 	}
 	
 	/* 8.ResponseEntity<자바빈즈 클래스> 타입
-	 * reponse 할 때 Http 헤더 정보와 객체 데이터를 전달
+	 	response 할 때 Http 헤더 정보와 객체 데이터를 전달
 	 */
-	//객체의 JSON타입의 데이터와 200 OK 상태코드 응답 
+	//객체의 JSON타입의 데이터와 200 OK 상태코드 응답
 	@ResponseBody
-	@RequestMapping(value="/goHome0801",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome0801",method=RequestMethod.GET)
 	public ResponseEntity<BookVO> home0801(){
 		log.info("home0801에 왔다");
 		
@@ -200,25 +199,25 @@ public class HomeController {
 	/*List와 Map도 8번을 응용하여 JSON타입의 데이터로 응답할 수 있음*/
 	
 	/* 11. ResponseEntity<byte[]>타입
-	 * response할 때 Http헤더 정보와 바이너리 파일 데이터를 전달할 수 있음
+	 response할 때 Http헤더 정보와 바이너리 파일 데이터를 전달할 수 있음
 	 */
 	@ResponseBody
-	@RequestMapping(value="/goHome1101",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome1101",method=RequestMethod.GET)
 	public ResponseEntity<byte[]> home1101() throws IOException{
 		log.info("home1101에 왔다");
 		
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
-		
 		//springframework 패키지를 쓰자
 		HttpHeaders headers = new HttpHeaders();
 		try {
-			in = new FileInputStream("C:\\eclipse-jee-2020-06-R-win32-x86_64\\workspace\\springProj\\src\\main\\webapp\\resources\\upload\\osaka.png");
-			//헤더야 이거 png이미지야
+			in = new FileInputStream("C:\\eclipse-jee-2020-06-R-win32-x86_64\\workspace\\springProjSem\\src\\main\\webapp\\resources\\upload\\osaka.png");
+			//헤더야, 이거 png 이미지야
 			headers.setContentType(MediaType.IMAGE_PNG);
 			//commons.io
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
-		} catch (FileNotFoundException e) {
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,HttpStatus.CREATED);
+		} catch (IOException e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}finally {
@@ -229,11 +228,11 @@ public class HomeController {
 	
 	//파일의 데이터를 웹 브라우저가 다운로드 받도록 해보자
 	@ResponseBody
-	@RequestMapping(value="/goHome1102",method = RequestMethod.GET)
+	@RequestMapping(value="/goHome1102",method=RequestMethod.GET)
 	public ResponseEntity<byte[]> home1102() throws Exception{
 		log.info("home1102에 왔다");
 		
-		String fileName = "UK.zip";
+		String fileName = "sintanjin.zip";
 		
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
@@ -241,11 +240,14 @@ public class HomeController {
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			in = new FileInputStream("C:\\eclipse-jee-2020-06-R-win32-x86_64\\workspace\\springProj\\src\\main\\webapp\\resources\\upload\\" + fileName);
+			in = new FileInputStream("C:\\eclipse-jee-2020-06-R-win32-x86_64\\workspace\\springProjSem\\src\\main\\webapp\\resources\\upload\\"+
+					fileName);
 			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			headers.add("Content-Disposition", "attachment;filename=\""+new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
-		} catch (FileNotFoundException e) {
+			headers.add("Content-Disposition", "attachment;filename=\""+
+					new String(fileName.getBytes("UTF-8"),"ISO-8859-1")+"\"");
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+					headers,HttpStatus.CREATED);
+		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
 		}finally {
@@ -254,4 +256,34 @@ public class HomeController {
 		return entity;
 	}
 	
+	/* 컨트롤러 메서드 매개변수
+    1. Model
+       이동 대상에 전달할 데이터를 가지고 있는 인터페이스
+    2. RedirectAttributes
+       리다이렉트 대상에 전달할 데이터를 가지고 있는 인터페이스
+    3. 자바빈즈 클래스
+       요청 파라미터를 가지고 있는 자바빈즈 클래스
+    4. MultipartFile
+       업로드된 파일 정보를 가지고 있는 인터페이스
+    5. BindingResult
+       도메인 클래스(VO)의 입력값 검증 결과를 가지고 있는 인터페이스
+       스프링폼과 함께 사용됨
+    6. java.util.Locale
+       클라이언트 로케일
+    7. java.security.Principal
+       클라이언트 인증을 위한 사용자 정보를 가지고 있는 인터페이스
+    */
+   
 }
+
+
+
+
+
+
+
+
+
+
+
+

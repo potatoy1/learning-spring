@@ -82,7 +82,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="/resources/sbadmin2/login.html">Login</a>
-            <a class="collapse-item" href="/resources/sbadmiSn2/register.html">Register</a>
+            <a class="collapse-item" href="/resources/sbadmin2/register.html">Register</a>
             <a class="collapse-item" href="/resources/sbadmin2/forgot-password.html">Forgot Password</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
