@@ -4,19 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ddit.vo.AddressVO;
 import kr.or.ddit.vo.BookVO;
+import kr.or.ddit.vo.CardVO;
+import kr.or.ddit.vo.MemVO;
+import kr.or.ddit.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
 //프링아 이거 자바빈 객체로 관리해줘
@@ -222,6 +229,32 @@ public class BoardController {
 		
 		return bookVOList;
 	}
+	
+//	@GetMapping("/list2")
+//	public String list2() {
+//		return "/board/list2";
+//	}
+//	public String list2Post(String memId, String memName, String memJob, String memLike, String memSkill) {
+//		log.info("memId : " + memId);
+//		log.info("memName: " + memName);
+//		log.info("memJob : " + memJob);
+//		log.info("memLike : " + memLike);
+//		log.info("memSkill : " + memSkill);
+//		//forwarding
+//		return "success";
+//	}
+//	@PostMapping("/board/list2")
+//	public String list2Post(@ModelAttribute MemVO memVO) {
+//		log.info("memId : " + memVO.getMemId());
+//		log.info("memName: " + memVO.getMemName());
+//		log.info("memJob : " + memVO.getMemJob());
+//		log.info("memLike : " + memVO.getMemLike());
+//		log.info("memSkill : " + memVO.getMemSkill());
+//			
+//		//forwarding
+//		return "register/success";
+//	}
+	
 }
 
 

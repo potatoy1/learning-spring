@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MemberController {
 	
-	//DI(의존성 주입), IoC
+	//DI(의존성 주입), IoC(제어의 역전)
 	@Inject
 	MemberService memberService;
 	
