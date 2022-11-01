@@ -43,6 +43,11 @@ public class HomeController {
 		log.info("home0101에 왔다");
 		//return "goHome0101";
 	}
+	@RequestMapping(value="/tree",method=RequestMethod.GET)
+	public void tree() {
+		log.info("tree에 왔다");
+		//return "goHome0101";
+	}
 	
 	@RequestMapping(value="/goHome0102",method=RequestMethod.GET)
 	public void home0102() {
