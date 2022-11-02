@@ -10,4 +10,5 @@ public interface MemberService {
 	//MEMBER, ADDRESS, CARD 동시에 insert
 	public int memberInsert(MemberVO memberVO);
 
+
 }

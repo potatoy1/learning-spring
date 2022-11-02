@@ -69,13 +69,13 @@ public class BookController {
 		
 		log.info("result : " + result);
 		
-		if(result<1) {//등록 실패
-			// /create (get방식) URI를 재요청
-			// 책 입력 화면으로 이동
-			mav.setViewName("redirect:/create");
-		}else {//등록 성공
-			mav.setViewName("redirect:/detail?bookId="+bookVO.getBookId());
-		}
+//		if(result<1) {//등록 실패
+//			// /create (get방식) URI를 재요청
+//			// 책 입력 화면으로 이동
+//			mav.setViewName("redirect:/create");
+//		}else {//등록 성공
+//			mav.setViewName("redirect:/detail?bookId="+bookVO.getBookId());
+//		}
 		
 		return mav;
 	}

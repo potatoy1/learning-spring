@@ -1,6 +1,7 @@
 package kr.or.ddit.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,16 @@ public class MemDao {
 	public int memInsert(MemVO memVO) {
 		return this.sqlSessionTemplate.insert("mem.memInsert",memVO);
 	}
-	public List<MemVO> list(){
-		return this.sqlSessionTemplate.selectList("mem.list");
+	//전체 목록
+	public List<MemVO> list(Map<String,String> map){
+		return this.sqlSessionTemplate.selectList("mem.list",map);
 	}
 	
+	//MEM 전체 행 수 구함 
+	//<select id="getTotal" resultType="int">
+	public int getTotal(Map<String,String> map) {
+		return this.sqlSessionTemplate.selectOne("mem.getTotal",map);
+	}
 }
 
 

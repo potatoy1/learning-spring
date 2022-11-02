@@ -2,6 +2,7 @@ package kr.or.ddit.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,9 +30,15 @@ public class MemServieceImpl implements MemService {
 		return this.memDao.memInsert(memVO);
 	}
 
+	//전체 목록
 	@Override
-	public List<MemVO> list() {
-		return this.memDao.list();
+	public List<MemVO> list(Map<String,String> map) {
+		return this.memDao.list(map);
 	}
 
+	//MEM 전체 행 수 구함 
+	@Override
+	public int getTotal(Map<String,String> map) {
+		return this.memDao.getTotal(map);
+	}
 }

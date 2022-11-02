@@ -3,17 +3,42 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace : xml파일은 여러개일 수 있으므로 이를 구별하기 위한 식별 용도로 사용 -->
 <mapper namespace="mem">
+	<sql id="where">
+		<!-- 통합검색 -->
+		AND (MEM_ID LIKE '%' || #{keyword} || '%' 
+		OR 	MEM_NAME LIKE '%' || #{keyword} || '%' 
+		OR 	MEM_JOB LIKE '%' || #{keyword} || '%' 
+		OR 	MEM_LIKE LIKE '%' || #{keyword} || '%' 
+		OR 	MEM_SKILL LIKE '%' || #{keyword} || '%' )
+	</sql>
 	<!-- MEMBER 테이블에 insert -->
-	<insert id="membInsert" parameterType="memVO">
-		INSERT INTO MEM(MEM_ID,MEM_NAME,MEM_JOB,MEM_LIKE,MEM_SKILL)
+	<insert id="memInsert" parameterType="memVO">
+		INSERT INTO
+		MEM(MEM_ID,MEM_NAME,MEM_JOB,MEM_LIKE,MEM_SKILL)
 		VALUES(#{memId},#{memName},#{memJob},#{memLike},#{memSkill})
 	</insert>
-	
-	<select id="list" resultType="memVO" parameterType="String">
-		SELECT MEM_ID, MEM_NAME, MEM_JOB, MEM_LIKE, MEM_SKILL
-		FROM   MEM
-		ORDER BY MEM_ID DESC
+
+	<select id="list" resultType="memVO" parameterType="hashMap">
+		WITH T AS(
+			SELECT ROW_NUMBER() OVER (ORDER BY MEM_ID ASC) RNUM, MEM_ID, MEM_NAME,
+			MEM_JOB, MEM_LIKE, MEM_SKILL
+			FROM MEM
+			
+			WHERE 1=1
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where"></include>
+			</if>
+		)
+		SELECT * FROM T
+		WHERE T.RNUM BETWEEN #{currentPage} * #{show} - (#{show}-1) AND #{currentPage} * #{show}
 	</select>
 	
-
+	<!-- MEM 전체 행 수 구함 -->
+	<select id="getTotal" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) FROM MEM
+		WHERE 1=1
+		<if test="keyword!=null and keyword!=''">
+			<include refid="where"></include>
+		</if>
+	</select>
 </mapper>
