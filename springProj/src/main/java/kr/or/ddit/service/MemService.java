@@ -14,4 +14,7 @@ public interface MemService {
 	public List<MemVO> list(Map<String,String> map);
 
 	public int getTotal(Map<String,String> map);
+	
+	public int chkDup(String memId);
+		
 }

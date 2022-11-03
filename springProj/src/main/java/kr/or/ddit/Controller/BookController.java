@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
+@RequestMapping("/book")
 public class BookController {
 	//도서관리프로그램
 	//BookService 서비스를 호출하기 위해 의존성 주입(DI)

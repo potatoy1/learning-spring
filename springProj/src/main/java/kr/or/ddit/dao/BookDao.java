@@ -68,7 +68,7 @@ public class BookDao {
 		return this.sqlSessionTemplate.delete("book.delete", bookId);
 	}
 	
-	//ATTACH 테이블에 다중 insert
+//	//ATTACH 테이블에 다중 insert
 	public int insertAttach(List<AttachVO> attachVOList) {
 		return this.sqlSessionTemplate.insert("book.insertAttach",attachVOList);
 	}

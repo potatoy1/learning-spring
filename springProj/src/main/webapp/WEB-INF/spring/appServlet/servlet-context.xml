@@ -31,6 +31,10 @@ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
       <beans:property name="order" value="2" />
    </beans:bean>
    
+   <!-- fileupload -->
+   <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+   </beans:bean>
+   
    <!-- Tiles 설정 시작 -->
    <beans:bean id="tilesConfigurer" 
       class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">

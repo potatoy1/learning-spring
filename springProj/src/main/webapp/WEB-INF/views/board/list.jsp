@@ -5,9 +5,9 @@
 $(function(){
    $("[name='show']").on("change",function(){
       let val = $(this).val();
-      location.href="<%=request.getContextPath()%>/board/list?currentPage=1&show="+val;
+      location.href="<%=request.getContextPath()%>/board/list?currentPage=1&show="+ val;
+		});
 	});
-});
 </script>
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
@@ -16,48 +16,39 @@ $(function(){
 	<div class="card-body">
 		<div class="table-responsive">
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			<form name="frm" id="frm" action="/board/list" method="get">
-				<div class="row">
-					<div class="col-sm-12 col-md-6">
-						<div class="dataTables_length" id="dataTable_length">
-							<label>Show <select id="show" name="show"
-                        aria-controls="dataTable"
-                        class="custom-select custom-select-sm form-control form-control-sm"><option
-                              value="10"
-                              <c:if test='${param.show eq 10}'>selected</c:if>
-                              >10</option>
-                           <option value="25"
-                              <c:if test='${param.show eq 25}'>selected</c:if>
-                           >25</option>
-                           <option value="50"
-                              <c:if test='${param.show eq 50}'>selected</c:if>
-                           >50</option>
-                           <option value="100"
-                              <c:if test='${param.show eq 100}'>selected</c:if>
-                           >100</option></select>entries
-							</label>
+				<form name="frm" id="frm" action="/board/list" method="get">
+					<div class="row">
+						<div class="col-sm-12 col-md-6">
+							<div class="dataTables_length" id="dataTable_length">
+								<label>Show <select id="show" name="show"
+									aria-controls="dataTable"
+									class="custom-select custom-select-sm form-control form-control-sm"><option
+											value="10" <c:if test='${param.show eq 10}'>selected</c:if>>10</option>
+										<option value="25"
+											<c:if test='${param.show eq 25}'>selected</c:if>>25</option>
+										<option value="50"
+											<c:if test='${param.show eq 50}'>selected</c:if>>50</option>
+										<option value="100"
+											<c:if test='${param.show eq 100}'>selected</c:if>>100</option></select>entries
+								</label>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<div id="dataTable_filter" class="dataTables_filter">
+								<label> <input type="search" name="keyword"
+									class="form-control form-control-sm" placeholder="검색어를 입력하세요"
+									aria-controls="dataTable" value="${param.keyword}" />
+								</label> <label>
+									<button type="submit"
+										class="btn btn-primary btn-icon-split btn-sm">
+										<span class="icon text-white-50"> <i
+											class="fas fa-flag"></i>
+										</span> <span class="text">통합검색</span>
+									</button>
+								</label>
+							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
-						<div id="dataTable_filter" class="dataTables_filter">
-							<label>
-								<input type="search" name="keyword"
-								class="form-control form-control-sm" 
-								placeholder="검색어를 입력하세요"
-								aria-controls="dataTable" 
-								value="${param.keyword}" />
-							</label>
-							<label>
-                        		<button type="submit" class="btn btn-primary btn-icon-split btn-sm">
-                                   <span class="icon text-white-50">
-                                       <i class="fas fa-flag"></i>
-                                   </span>
-                                   <span class="text">통합검색</span>
-                               </button>
-                     		</label>	
-						</div>
-					</div>
-				</div>
 				</form>
 				<div class="row">
 					<div class="col-sm-12">
@@ -87,10 +78,14 @@ $(function(){
 										rowspan="1" colspan="1"
 										aria-label="Start date: activate to sort column ascending"
 										style="width: 68px;">특기</th>
+									<th class="sorting" tabindex="0" aria-controls="dataTable"
+										rowspan="1" colspan="1"
+										aria-label="Start date: activate to sort column ascending"
+										style="width: 83.0938px;">전화번호</th>
 								</tr>
 							</thead>
 							<tbody>
-							<!-- before => data : List<MemVO> list / row : MemVO 
+								<!-- before => data : List<MemVO> list / row : MemVO 
 					   페이징처리 after => data : ArticlePage이므로
 					   							  data.content 해야지 List<MemVO> list가 나옴
 							stat.count : 행번호(1,2,3,4,5..)
@@ -98,23 +93,24 @@ $(function(){
 							-->
 								<c:forEach var="list" items="${data.content}" varStatus="stat">
 									<c:if test="${stat.count%2==0}">
-										<tr class ="even" style="background-color:#f0f8ff;">
+										<tr class="even" style="background-color: #f0f8ff;">
 									</c:if>
 									<c:if test="${stat.count%2!=0}">
-										<tr class ="odd">
+										<tr class="odd">
 									</c:if>
-										<td>${list.memId}</td>
-										<td>${list.memName}</td>
-										<td>${list.memJob}</td>
-										<td>${list.memLike}</td>
-										<td>${list.memSkill}</td>
+									<td>${list.memId}</td>
+									<td>${list.memName}</td>
+									<td>${list.memJob}</td>
+									<td>${list.memLike}</td>
+									<td>${list.memSkill}</td>
+									<td>${list.memHp}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 						<p>
-	<a href="/board/create">회원 등록</a>
-</p>
+							<a href="/board/create">회원 등록</a>
+						</p>
 					</div>
 				</div>
 				<div class="row">
@@ -143,26 +139,32 @@ $(function(){
 							<c:if test="${endRow>data.total}">
 								<c:set var="endRow" value="${data.total}" />
 							</c:if>
-							Showing ${startRow} to ${endRow} of ${data.total} entries</div>
+							Showing ${startRow} to ${endRow} of ${data.total} entries
+						</div>
 					</div>
 					<div class="col-sm-12 col-md-7">
 						<div class="dataTables_paginate paging_simple_numbers"
 							id="dataTable_paginate">
 							<ul class="pagination">
-								<li class="paginate_button page-item previous 
+								<li
+									class="paginate_button page-item previous 
 									<c:if test='${data.startPage lt 6}'>disabled</c:if>
 								"
-									id="dataTable_previous"><a href="/board/list?currentPage=${data.startPage-5}&show=${show}"
+									id="dataTable_previous"><a
+									href="/board/list?currentPage=${data.startPage-5}&show=${show}"
 									aria-controls="dataTable" data-dt-idx="0" tabindex="0"
 									class="page-link">Previous</a></li>
-								<c:forEach var="pNo" begin="${data.startPage}" end="${data.endPage}" >
-								<!-- class=".....active" => 현재페이지를 파랑색으로 보임 -->
-								<li class="paginate_button page-item 
+								<c:forEach var="pNo" begin="${data.startPage}"
+									end="${data.endPage}">
+									<!-- class=".....active" => 현재페이지를 파랑색으로 보임 -->
+									<li
+										class="paginate_button page-item 
 									<c:if test='${currentPage == pNo}'>active</c:if>
 								">
-									<a href="/board/list?currentPage=${pNo}&show=${show}"
-									aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-									class="page-link">${pNo}</a></li>
+										<a href="/board/list?currentPage=${pNo}&show=${show}"
+										aria-controls="dataTable" data-dt-idx="1" tabindex="0"
+										class="page-link">${pNo}</a>
+									</li>
 								</c:forEach>
 								<!-- EL태그 정리
 									== : eq(equal)
@@ -171,10 +173,13 @@ $(function(){
 									<= : le(less equal)
 									>= : ge(greater equal)
 								 -->
-								<li class="paginate_button page-item next
+								<li
+									class="paginate_button page-item next
 									<c:if test='${data.endPage ge data.totalPages}'>disabled </c:if>
-								" id="dataTable_next">
-								<a href="/board/list?currentPage=${data.startPage+5}&show=${show}" aria-controls="dataTable" data-dt-idx="7" tabindex="0"
+								"
+									id="dataTable_next"><a
+									href="/board/list?currentPage=${data.startPage+5}&show=${show}"
+									aria-controls="dataTable" data-dt-idx="7" tabindex="0"
 									class="page-link">Next</a></li>
 							</ul>
 						</div>

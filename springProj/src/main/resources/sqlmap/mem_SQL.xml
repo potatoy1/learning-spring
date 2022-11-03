@@ -14,14 +14,14 @@
 	<!-- MEMBER 테이블에 insert -->
 	<insert id="memInsert" parameterType="memVO">
 		INSERT INTO
-		MEM(MEM_ID,MEM_NAME,MEM_JOB,MEM_LIKE,MEM_SKILL)
-		VALUES(#{memId},#{memName},#{memJob},#{memLike},#{memSkill})
+		MEM(MEM_ID,MEM_NAME,MEM_JOB,MEM_LIKE,MEM_SKILL,MEM_HP)
+		VALUES(#{memId},#{memName},#{memJob},#{memLike},#{memSkill},#{memHp})
 	</insert>
 
 	<select id="list" resultType="memVO" parameterType="hashMap">
 		WITH T AS(
 			SELECT ROW_NUMBER() OVER (ORDER BY MEM_ID ASC) RNUM, MEM_ID, MEM_NAME,
-			MEM_JOB, MEM_LIKE, MEM_SKILL
+			MEM_JOB, MEM_LIKE, MEM_SKILL, MEM_HP
 			FROM MEM
 			
 			WHERE 1=1
@@ -40,5 +40,11 @@
 		<if test="keyword!=null and keyword!=''">
 			<include refid="where"></include>
 		</if>
+	</select>
+	
+	<!-- 아이디 중복체크 -->
+	<!-- parameterType은 String, hashMap, memVO -->
+	<select id="chkDup" parameterType="String" resultType="int">
+	SELECT COUNT(*) FROM MEM WHERE MEM_ID = #{memId}
 	</select>
 </mapper>
