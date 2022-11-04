@@ -142,11 +142,6 @@
 						id="memLike" placeholder="memLike" value="100">
 				</div>
 				<div class="mb-3">
-					<label for="exampleFormControlInput1" class="form-label">memSkill
-					</label> <input type="text" class="form-control" name="memSkill"
-						id="memSkill" placeholder="memSkill" value="100">
-				</div>
-				<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">memHp</label>
 					<input type="text" class="form-control" name="memHp" id="memHp"
 						placeholder="memHp" required />

@@ -26,6 +26,7 @@ import kr.or.ddit.vo.MemVO;
 import kr.or.ddit.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
 
+
 //프링아 이거 자바빈 객체로 관리해줘
 @RequestMapping("/board")
 @Slf4j

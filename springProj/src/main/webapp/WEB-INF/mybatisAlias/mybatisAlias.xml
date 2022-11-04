@@ -20,6 +20,5 @@
 		<typeAlias type="kr.or.ddit.vo.CardVO"  alias="cardVO" />
 		<typeAlias type="kr.or.ddit.vo.MemberVO"  alias="memberVO" />
 		<typeAlias type="kr.or.ddit.vo.MemVO"  alias="memVO" />
-		<typeAlias type="kr.or.ddit.vo.DeptVO"  alias="deptVO" />
 	</typeAliases>
 </configuration>  

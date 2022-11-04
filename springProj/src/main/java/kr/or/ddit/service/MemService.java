@@ -16,5 +16,6 @@ public interface MemService {
 	public int getTotal(Map<String,String> map);
 	
 	public int chkDup(String memId);
-		
+	
+	public MemVO detail(String memId);
 }

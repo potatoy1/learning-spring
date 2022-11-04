@@ -77,10 +77,6 @@ $(function(){
 									<th class="sorting" tabindex="0" aria-controls="dataTable"
 										rowspan="1" colspan="1"
 										aria-label="Start date: activate to sort column ascending"
-										style="width: 68px;">특기</th>
-									<th class="sorting" tabindex="0" aria-controls="dataTable"
-										rowspan="1" colspan="1"
-										aria-label="Start date: activate to sort column ascending"
 										style="width: 83.0938px;">전화번호</th>
 								</tr>
 							</thead>
@@ -98,11 +94,10 @@ $(function(){
 									<c:if test="${stat.count%2!=0}">
 										<tr class="odd">
 									</c:if>
-									<td>${list.memId}</td>
-									<td>${list.memName}</td>
+									<td class="sorting_1">${list.memId}</td>
+									<td><a href="/board/detail?memId=${list.memId}">${list.memName}</td>
 									<td>${list.memJob}</td>
 									<td>${list.memLike}</td>
-									<td>${list.memSkill}</td>
 									<td>${list.memHp}</td>
 									</tr>
 								</c:forEach>
