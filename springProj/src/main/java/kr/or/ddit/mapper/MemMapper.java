@@ -3,26 +3,38 @@ package kr.or.ddit.mapper;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.vo.AttachVO;
+import kr.or.ddit.vo.MemAuthVO;
 import kr.or.ddit.vo.MemVO;
 
 public interface MemMapper {
-	//글 목록
-	//memList(Map<String,String>map)=>mapper파일의 id(resultType)
-	public List<MemVO> list(Map<String,String>map);		
+	//회원번호 생성
+	public int makeUserNo();
 	
-	//등록
-	public int memInsert(MemVO memVO) ;
+	//중복아이디 체크
+	public int dupChk(MemVO memVO);
 	
-	//MEM 전체 행 수 구함 
-	//<select id="getTotal" resultType="int">
-	public int getTotal(Map<String,String> map);
+	//회원테이블(MEM) INSERT
+	public int insertMem(MemVO memVO);
 	
+	//첨부테이블(ATTACH) INSERT
+	public int insertAttach(List<AttachVO> attachVOList);
 	
-	//아이디 중복체크
-	//<select id="chkDup" parameterType="String">
-	public int chkDup(String memId);
+	//회원 권한 테이블(MEM_AUTH) INSERT
+	public int insertMemAuth(List<MemAuthVO> memAuthVOList);
 	
-	//상세보기
-	public MemVO detail(String memId);
+	//회원 목록
+	public List<MemVO> memList(Map<String,String> map);
 	
+	//회원 상세
+	public MemVO detail(String username);
+	
+	//회원 전체 수(검색 포함)
+	public int memTotal(Map<String,String> map);
+	
+	//새로운 MEM 테이블에 insert
+	public int memInsert(MemVO memVO);
+	
+	//새로운 MEM 테이블 list
+	public List<MemVO> memList2();
 }

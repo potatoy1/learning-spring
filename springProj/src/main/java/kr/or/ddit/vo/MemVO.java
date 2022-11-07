@@ -1,295 +1,76 @@
 package kr.or.ddit.vo;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Data;
+
+/* 입력값 검증(서버_비즈니스 로직)
+ 	스프링 MVC는 Bean Validation 기능을 이용해 요청 파라미터 값이
+ 	바인딩 된 도메인 클래스의 입력값 검증을 함
+ 	크롬 -> jsp(post)요청 -> 자바빈으로 파라미터 매핑 -> 자바빈에서 validation체킹
+ 	-> 오류 발생 시 요청된 jsp로 forwarding => jsp에서 오류 표시 
+ */
+/* 입력값 검증 규칠 : 입력값 검증 규칙은 Bean Validation이 제공하는 제약 애너테이션으로 설정
+1. @NotNull : 빈 값이 아닌지를 검사
+2. @NotBlank : 문자열이 null이 아니고 trim한 길이가 0보다 크다는 것 검사*****
+3. @Size : 글자 수나 컬렉션의 요소 개수 검사*****
+4. @Email : 이메일 주소 형식인지 검사*****
+5. @Past : 과거 날짜인지 검사
+6. @Future : 미래 날짜인지 검사
+ */
+//회원정보 자바빈 클래스
+@Data
 public class MemVO {
-	//필수 입력
+	private int userNo;
+	//필수 입력 검증 규칙 지정
 	@NotBlank
-	private String memId;
-	//필수 입력 + 최대 3글자까지 허용
+	private String userId;
+	@NotBlank
+	private String userPw;
+	//문자열이 null이 아니고 trim(공백제거)한 길이가 3보다 작은 것을 검사
 	@NotBlank
 	@Size(max=3)
-	private String memName;
-	private String memJob;
-	private String memLike;
-	private String memHp;
-	//MEM테이블에 없어도 사용 가능
-	private String userId;
-	private String password;
-	//자기소개
-	private String introduction;
-	private MultipartFile picture;
-	private MultipartFile picture2;
-	//..name="pictureList[0]"
-	private List<MultipartFile> pictureList;
-	//..name="pictureArray"
-	private MultipartFile[] pictureArray;
-	//보유 코인
-	private int coin = 100;
-	//생일(기본 :  2022/11/01 => 변경 : 20221101)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date birth;
-	//성별
-	private String gender;
-	//국적
-	private String nationality;
-	//보유 자동차들
-	private String[] cars;
-	private String car;
-	//취미들
-	private String[] hobbyList;
-	private String hobby;
-	//결혼유무
-	private boolean marriaged;
-	//중첩된 자바빈(1:1)
-	private AddressVO addressVO;
-	//중접된 자바빈(1:N)
-	private List<CardVO> cardVOList;
-	//개발자 여부(Y, null)
-	private String developer;
-	//외국인 여부(boolean형이 더 좋더라)
-	private boolean foreigner;
-	//
+	private String userName;
+	@Email
+	private String userEmail;
+	private int coin;
+	@DateTimeFormat(pattern = "yyyyMMdd")
+	private Date regDate;
+	//과거 날짜인지 검사
+	@Past
+	@DateTimeFormat(pattern = "yyyyMMdd")
+	private Date updDate;
+	private String enabled;
+	private String filename;	//첨부파일명
+	//중첩된 자바빈 클래스의 유효성 검사
+	private List<MemAuthVO> memAuthVOList;
+	//첨부파일
+	private MultipartFile[] memImage;
+	//중첩된 자바빈즈 입력값 검증 -> 골뱅이Valid
+	//첨부파일리스트
+	@Valid
 	private List<AttachVO> attachVOList;
+	//행번호
+	private int rnum;
+	//페이지번호
+	private int pnum;
 	
-	//기본 생성자
-	public MemVO() {}
-
-	//getter/setter메소드
-	public String getMemId() {
-		return memId;
-	}
-
-	public void setMemId(String memId) {
-		this.memId = memId;
-	}
-
-	public String getMemName() {
-		return memName;
-	}
-
-	public void setMemName(String memName) {
-		this.memName = memName;
-	}
-
-	public String getMemJob() {
-		return memJob;
-	}
-
-	public void setMemJob(String memJob) {
-		this.memJob = memJob;
-	}
-
-	public String getMemLike() {
-		return memLike;
-	}
-
-	public void setMemLike(String memLike) {
-		this.memLike = memLike;
-	}
-
-	public String getMemHp() {
-		return memHp;
-	}
-
-	public void setMemHp(String memHp) {
-		this.memHp = memHp;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public MultipartFile getPicture() {
-		return picture;
-	}
-
-	public void setPicture(MultipartFile picture) {
-		this.picture = picture;
-	}
-
-	public MultipartFile getPicture2() {
-		return picture2;
-	}
-
-	public void setPicture2(MultipartFile picture2) {
-		this.picture2 = picture2;
-	}
-
-	public List<MultipartFile> getPictureList() {
-		return pictureList;
-	}
-
-	public void setPictureList(List<MultipartFile> pictureList) {
-		this.pictureList = pictureList;
-	}
-
-	public MultipartFile[] getPictureArray() {
-		return pictureArray;
-	}
-
-	public void setPictureArray(MultipartFile[] pictureArray) {
-		this.pictureArray = pictureArray;
-	}
-
-	public String getIntroduction() {
-		return introduction;
-	}
-
-	public void setIntroduction(String introduction) {
-		this.introduction = introduction;
-	}
-
-	public int getCoin() {
-		return coin;
-	}
-
-	public void setCoin(int coin) {
-		this.coin = coin;
-	}
-
-	public Date getBirth() {
-		return birth;
-	}
-
-	public void setBirth(Date birth) {
-		this.birth = birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getNationality() {
-		return nationality;
-	}
-
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
-
-	public String[] getCars() {
-		return cars;
-	}
-
-	public void setCars(String[] cars) {
-		this.cars = cars;
-	}
-
-	public String getCar() {
-		return car;
-	}
-
-	public void setCar(String car) {
-		this.car = car;
-	}
-
-	public String[] getHobbyList() {
-		return hobbyList;
-	}
-
-	public void setHobbyList(String[] hobbyList) {
-		this.hobbyList = hobbyList;
-	}
-
-	public String getHobby() {
-		return hobby;
-	}
-
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
-	}
-
-	public boolean isMarriaged() {
-		return marriaged;
-	}
-
-	public void setMarriaged(boolean marriaged) {
-		this.marriaged = marriaged;
-	}
-
-	public AddressVO getAddressVO() {
-		return addressVO;
-	}
-
-	public void setAddressVO(AddressVO addressVO) {
-		this.addressVO = addressVO;
-	}
-
-	public List<CardVO> getCardVOList() {
-		return cardVOList;
-	}
-
-	public void setCardVOList(List<CardVO> cardVOList) {
-		this.cardVOList = cardVOList;
-	}
-
-	public String getDeveloper() {
-		return developer;
-	}
-
-	public void setDeveloper(String developer) {
-		this.developer = developer;
-	}
-
-	public boolean isForeigner() {
-		return foreigner;
-	}
-
-	public void setForeigner(boolean foreigner) {
-		this.foreigner = foreigner;
-	}
-
-	public List<AttachVO> getAttachVOList() {
-		return attachVOList;
-	}
-
-	public void setAttachVOList(List<AttachVO> attachVOList) {
-		this.attachVOList = attachVOList;
-	}
-
-	@Override
-	public String toString() {
-		return "MemVO [memId=" + memId + ", memName=" + memName + ", memJob=" + memJob + ", memLike=" + memLike
-				+ ", memSkill="  + ", memHp=" + memHp + ", userId=" + userId + ", password=" + password
-				+ ", introduction=" + introduction + ", picture=" + picture + ", picture2=" + picture2
-				+ ", pictureList=" + pictureList + ", pictureArray=" + Arrays.toString(pictureArray) + ", coin=" + coin
-				+ ", birth=" + birth + ", gender=" + gender + ", nationality=" + nationality + ", cars="
-				+ Arrays.toString(cars) + ", car=" + car + ", hobbyList=" + Arrays.toString(hobbyList) + ", hobby="
-				+ hobby + ", marriaged=" + marriaged + ", addressVO=" + addressVO + ", cardVOList=" + cardVOList
-				+ ", developer=" + developer + ", foreigner=" + foreigner + ", attachVOList=" + attachVOList + "]";
-	}
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
