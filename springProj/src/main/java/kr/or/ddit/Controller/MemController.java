@@ -221,18 +221,3 @@ public class MemController {
 	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
