@@ -92,7 +92,7 @@ public class PreviewsController {
 		int rslt = this.memService.memInsert(memVO);
 		
 		//forwarding
-		return "previews/write";
+		return "redirect:/previews/list";
 	}
 	
 	@GetMapping("/list")
@@ -154,11 +154,14 @@ public class PreviewsController {
 		
 		return "redirect:/previews/detail?userNo="+memVO.getUserNo();
 	}
+	
 	//요청 URI : /previews/deletePost
+	//파라미터 : memVO
+	//방식 : post
 	@PostMapping("/deletePost")
-	public String memDelete(int userNo) {
+	public String memDelete(@ModelAttribute MemVO memVO) {
 		
-		int result = this.memService.memDelete(userNo);
+		int result = this.memService.memDelete(memVO.getUserNo());
 		
 		log.info("result : " + result);
 				

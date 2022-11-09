@@ -88,8 +88,7 @@
 
 	<!-- 회원테이블(MEM) INSERT -->
 	<insert id="insertMem" parameterType="memVO">
-		INSERT INTO MEM(USER_NO,
-		USER_ID, USER_PW, USER_NAME, COIN, REG_DATE, UPD_DATE, ENABLED)
+		INSERT INTO MEM(USER_NO,USER_ID, USER_PW, USER_NAME, COIN, REG_DATE, UPD_DATE, ENABLED)
 		VALUES(#{userNo},#{userId},#{userPw},#{userName},0,SYSDATE,NULL,1)
 	</insert>
 
@@ -174,10 +173,8 @@
 			WHERE TO_CHAR(SYSDATE,'YYYYMM') = SUBSTR(USER_NO,1,6)
 		</selectKey>
 
-		INSERT INTO MEM(USER_NO,USER_ID,USER_PW,USER_NAME,USER_EMAIL,
-		UPD_DATE)
-		VALUES(#{userNo}, #{userId}, #{userPw}, #{userName},
-		#{userEmail}, #{updDate})
+		INSERT INTO MEM(USER_NO,USER_ID,USER_PW,USER_NAME,USER_EMAIL,UPD_DATE)
+		VALUES(#{userNo}, #{userId}, #{userPw}, #{userName},#{userEmail}, #{updDate})
 	</insert>
 
 	<!-- 1 -->
