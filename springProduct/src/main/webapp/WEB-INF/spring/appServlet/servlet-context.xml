@@ -65,9 +65,7 @@ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 		골뱅이PostAuthorize : 특정 메소드를 실행한 후에 role(권한)을 체킹
 		
 		2. secured-annotations -> 골뱅이Secured를 활성화
-		Secured : 스프링 시큐리티 모듈을 지원하기 위한 애너테이션
-		
-		 
+		골뱅이Secured : 스프링 시큐리티 모듈을 지원하기 위한 애너테이션
 	-->
 	<security:global-method-security pre-post-annotations="enabled"
 		secured-annotations="enabled" />
